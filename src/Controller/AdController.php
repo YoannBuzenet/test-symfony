@@ -22,12 +22,29 @@ class AdController extends AbstractController
     }
 
     /**
+     * Ad Creation
+     * 
+     * @Route("/ads/new", name="ads_create")
+     *
+     * @return Response
+     */
+    public function create(){
+
+
+
+        return $this->render('ad/new.html.twig');
+    }
+
+    /**
      * Display one ad with details
      *
      * @Route("/ads/{slug}", name="ads_show")
+     * 
+     * @return Response
      */
-    public function show($slug, AdRepository $repo){
-        $ad = $repo->findOneBySlug($slug);
+    public function show(Ad $ad){
+        //Grace au Param Converter, l'Ad est récupérée en tache de fond avec le Repository et le slug passé en paramètre
+        //$ad = $repo->findOneBySlug($slug);
 
         return $this->render('/ad/show.html.twig', [
             'ad'=> $ad
