@@ -6,19 +6,42 @@ use App\Entity\Ad;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdType extends AbstractType
 {
+
+    /**
+     * Builds automatically label & placeholder for the form
+     *
+     * @param [string] $label
+     * @param [string] $placeholder
+     * @return array
+     */
+    private function getConfiguration(string $label, string $placeholder) : array{
+
+        return [
+            'label' => $label,
+            'attr' => [
+                'placeholder' => $placeholder
+            ]
+            ];
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('slug')
-            ->add('price')
-            ->add('introduction')
-            ->add('content')
-            ->add('coverImage')
-            ->add('rooms')
+            ->add('title', TextType::class, $this->getConfiguration('Titre', 'Taper un super titre pour votre annonce'))
+            ->add('slug', TextType::class, $this->getConfiguration('Chaine URL', 'Adresse web (automatique)'))
+            ->add('coverImage', UrlType::class, $this->getConfiguration('URL de l\'image principale', 'Collez ici l\'adresse de l\'image'))
+            ->add('introduction', TextType::class, $this->getConfiguration('Introduction', 'Présentez votre bien'))
+            ->add('content', TextareaType::class, $this->getConfiguration('Contenu', 'Décrivez votre bien à vos futurs visiteurs. Qu\'ont-ils à découvrir dans votre magnifique propriété ?'))
+            ->add('rooms', IntegerType::class, $this->getConfiguration('Nombre de chambres', 'Nombre de chambres disponibles'))
+            ->add('price', MoneyType::class, $this->getConfiguration('Prix', 'Indiquez le prix par nuit'))
         ;
     }
 

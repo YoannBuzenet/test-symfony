@@ -2,6 +2,7 @@
 
 {% block title %}Création d'une annonce{% endblock %}
 
+{% form_theme form _self %}
 
 {% block body %}
 
@@ -9,13 +10,13 @@
     <h1>Création d'une nouvelle annonce</h1>
 
     {# First way of doing #}
-    {# {{ form_start(form) }}
+    {{ form_start(form) }}
 
     {{ form_widget(form) }}
 
     <button type="submit" class="btn btn-primary"> Enregistrer la nouvelle annonce</button>
 
-    {{ form_end(form) }} #}
+    {{ form_end(form) }}
 
     {#Other way of doing
     {{ form (form) }} #}
@@ -33,3 +34,16 @@
 
 
 {% endblock %}
+
+{# Exemple de theme Twig créé à la main - précis mais long et fastidieux ; conseil - chercher des themes existants
+{% block form_row %}
+
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block text_widget %}
+    <input type="text" class="form-control" name="{{ full_name }}" id="{{ id }}">
+{% endblock %} #}
