@@ -8,6 +8,7 @@
 <div class="container">
     <h1>Création d'une nouvelle annonce</h1>
 
+    {# First way of doing #}
     {# {{ form_start(form) }}
 
     {{ form_widget(form) }}
@@ -16,7 +17,17 @@
 
     {{ form_end(form) }} #}
 
-    {{ form (form) }}
+    {#Other way of doing
+    {{ form (form) }} #}
+
+    {# Third way of doing
+    <div class="form-group">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title, { 'attr' : {
+            'class' : 'form-control',
+            'placeholder' : 'Titre de l\'annonce'
+        }}) }}
+    </div> #}
 
 </div>
 
