@@ -2,6 +2,7 @@
 
 {% block title %}Création d'une annonce{% endblock %}
 
+{# Permet de dire à Twig d'utiliser un theme défini sur cette page Twig #}
 {% form_theme form _self %}
 
 {% block body %}
@@ -47,3 +48,49 @@
 {% block text_widget %}
     <input type="text" class="form-control" name="{{ full_name }}" id="{{ id }}">
 {% endblock %} #}
+
+{% block _ad_images_widget %}
+    <p>Ici, vous pouvez ajouter vos propres images</p>
+
+    {{ form_widget(form) }}
+
+    <div class="form-group">
+        <button type="button" id="add-image" class="btn btn-primary">Ajouter une image</button>
+    </div>
+
+{% endblock %}
+
+{% block _ad_images_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _ad_images_entry_widget %}
+    <div class="form-group">
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.url)}}
+            </div>
+            <div class="col">
+                {{ form_widget(form.caption)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+    $('#add-image').click(function(){
+        // We count the number of current existing fields
+        const index = $('#ad_images div.form-group').length;
+
+        //Getting the prototype code given by Symfony
+        const tmpl = $('#ad_images').data('prototype').replace(/__name__/g, index);
+
+        //Injecting the new code in the form div
+
+        
+    });
+</script>
+
+{% endblock %}
