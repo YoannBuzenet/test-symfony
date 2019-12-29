@@ -24,21 +24,21 @@ class AdType extends AbstractType
      * @param [string] $placeholder
      * @return array
      */
-    private function getConfiguration(string $label, string $placeholder) : array{
+    private function getConfiguration(string $label, string $placeholder, array $options=[]) : array{
 
-        return [
+        return array_merge([
             'label' => $label,
             'attr' => [
                 'placeholder' => $placeholder
             ]
-            ];
+            ], $options);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('title', TextType::class, $this->getConfiguration('Titre', 'Taper un super titre pour votre annonce'))
-            ->add('slug', TextType::class, $this->getConfiguration('Chaine URL', 'Adresse web (automatique)'))
+            ->add('slug', TextType::class, $this->getConfiguration('Chaine URL', 'Adresse web (automatique)', ['required' => false]))
             ->add('coverImage', UrlType::class, $this->getConfiguration('URL de l\'image principale', 'Collez ici l\'adresse de l\'image'))
             ->add('introduction', TextType::class, $this->getConfiguration('Introduction', 'Présentez votre bien'))
             ->add('content', TextareaType::class, $this->getConfiguration('Contenu', 'Décrivez votre bien à vos futurs visiteurs. Qu\'ont-ils à découvrir dans votre magnifique propriété ?'))
