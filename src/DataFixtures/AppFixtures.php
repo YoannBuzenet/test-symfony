@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use Faker\Factory;
+use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,7 +15,14 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('FR-fr');
         
+        //Here we handle Users
+        for( $i=1; $i<=10; $i++){
+            $user = new User();
+            
+        }
         
+
+        //Here we create ads
         for( $i=1; $i<=30; $i++){
 
             $title = $faker->sentence();
