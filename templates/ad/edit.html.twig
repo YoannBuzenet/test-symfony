@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Création d'une annonce{% endblock %}
+{% block title %} Edition d'une annonce {% endblock %}
 
 {# Permet de dire à Twig d'utiliser un theme défini sur cette page Twig #}
 {% form_theme form _self %}
@@ -8,46 +8,20 @@
 {% block body %}
 
 <div class="container">
-    <h1>Création d'une nouvelle annonce</h1>
+    <h1>Modifier l'annonce : {{ ad.title }}</h1>
 
     {# First way of doing #}
     {{ form_start(form) }}
 
     {{ form_widget(form) }}
 
-    <button type="submit" class="btn btn-primary"> Enregistrer la nouvelle annonce</button>
+    <button type="submit" class="btn btn-primary"> Modifier l'annonce</button>
 
     {{ form_end(form) }}
 
-    {#Other way of doing
-    {{ form (form) }} #}
-
-    {# Third way of doing
-    <div class="form-group">
-        {{ form_label(form.title) }}
-        {{ form_widget(form.title, { 'attr' : {
-            'class' : 'form-control',
-            'placeholder' : 'Titre de l\'annonce'
-        }}) }}
-    </div> #}
-
 </div>
 
-
 {% endblock %}
-
-{# Exemple de theme Twig créé à la main - précis mais long et fastidieux ; conseil - chercher des themes existants
-{% block form_row %}
-
-    <div class="form-group">
-        {{ form_label(form) }}
-        {{ form_widget(form) }}
-    </div>
-{% endblock %}
-
-{% block text_widget %}
-    <input type="text" class="form-control" name="{{ full_name }}" id="{{ id }}">
-{% endblock %} #}
 
 {% block _ad_images_widget %}
     <p>Ici, vous pouvez ajouter vos propres images</p>
@@ -72,11 +46,9 @@
             <div class="row">
                 <div class="col">
                     {{ form_widget(form.url)}}
-                    {{ form_errors(form.url) }}
                 </div>
                 <div class="col">
                     {{ form_widget(form.caption)}}
-                    {{ form_errors(form.caption) }}
                 </div>
             </div>
         </div>
@@ -116,6 +88,14 @@
             $(target).remove();
         })
     }
+
+    function updateCounter(){
+        const count = +$('#ad_images div.form-group').length;
+
+        $('#widgets-counter').val(count);
+    }
+
+    updateCounter();
 
     handleDeleteButtons();
 

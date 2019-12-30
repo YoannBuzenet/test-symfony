@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(
  *  fields = {"title"},
- *  message = "Une autre annonce possède déjà ce titre."
+ *  message = "Une autre annonce possède déjà ce titre. Pouvez-vous le modifier svp ?"
  * )
  */
 class Ad
@@ -66,6 +66,7 @@ class Ad
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="ad", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $images;
 
