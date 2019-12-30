@@ -20,8 +20,9 @@ class AdType extends AbstractType
     /**
      * Builds automatically label & placeholder for the form
      *
-     * @param [string] $label
-     * @param [string] $placeholder
+     * @param string $label
+     * @param string $placeholder
+     * @param array other options that we want to add to form parameters
      * @return array
      */
     private function getConfiguration(string $label, string $placeholder, array $options=[]) : array{
