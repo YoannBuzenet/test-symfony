@@ -13,6 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -136,6 +137,7 @@ class AccountController extends AbstractController
             //Checking old password match current password
             if(!password_verify($passwordUpdate->getOldPassword(), $user->getHash())){
                 //Gérer l'erreur
+                $form->get('oldPassword')->addError(new FormError('Le mot de passe saisi n\'est pas valide'));
             }
             else {
                 //Saving password
@@ -148,7 +150,7 @@ class AccountController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    'Votre mot de passe a bien été corrigé.');
+                    'Votre mot de passe a bien été modifié.');
                 
                     return $this->redirectToRoute('account_password');
             }
