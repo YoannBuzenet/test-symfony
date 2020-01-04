@@ -121,11 +121,38 @@ class AccountController extends AbstractController
      *
      * @return Response
      */
-    public function updatePassword(){
+    public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager){
 
         $passwordUpdate = new PasswordUpdate();
 
+        $user = $this->getUser();
+
         $form = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            //Checking old password match current password
+            if(!password_verify($passwordUpdate->getOldPassword(), $user->getHash())){
+                //Gérer l'erreur
+            }
+            else {
+                //Saving password
+                $newPassword = $passwordUpdate->getNewPassword();
+                $hash = $encoder->encodePassword($user, $newPassword);
+                $user->setHash($hash);
+
+                $manager->persist($user);
+                $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Votre mot de passe a bien été corrigé.');
+                
+                    return $this->redirectToRoute('account_password');
+            }
+        }
 
         return $this->render('account/password.html.twig', [
             'form' => $form->createView()
