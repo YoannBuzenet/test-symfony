@@ -161,4 +161,18 @@ class AccountController extends AbstractController
         ]);
 
     }
+    /**
+     * Displays user's profile
+     *
+     * @return Response
+     * 
+     * @Route("/account", name="account_index")
+     * 
+     */
+    public function myAccount(){
+
+        return $this->render('user/index.html.twig',[
+            'user' => $this->getUser()
+        ]);
+    }
 }
