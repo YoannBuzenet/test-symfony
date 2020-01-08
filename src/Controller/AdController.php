@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -30,6 +32,7 @@ class AdController extends AbstractController
      * Ad Creation
      * 
      * @Route("/ads/new", name="ads_create")
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */
@@ -88,6 +91,7 @@ class AdController extends AbstractController
      * Display one ad with details
      *
      * @Route("/ads/{slug}", name="ads_show")
+    
      * 
      * @return Response
      */
@@ -103,6 +107,7 @@ class AdController extends AbstractController
      * 'Edit an Ad' Form
      *
      * @Route("/ads/{slug}/edit", name="ads_edit")
+     * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Vous ne pouvez pas modifier cette annonce.")
      * 
      * @return Response
      */
