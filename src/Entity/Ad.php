@@ -102,6 +102,30 @@ class Ad
         }
     }
 
+    /**
+     * Gives array of NOT available days
+     *
+     * @return array Datetime Array with busy days
+     */
+    public function getNotAvailableDays(){
+        $notAvailableDays = [];
+
+        foreach($this->bookings as $booking){
+            //Compute busy days
+            $result = range($booking->getStartDate()->getTimestamp(),
+                            $booking->getEndDate()->getTimestamp(),
+                            24*60*60*1000);
+
+            $days = array_map(function($dayTimestamp){
+                return new \Datetime(date('Y-m-d', $dayTimestamp));
+            }, $result);     
+            
+            $notAvailableDays = array_merge($notAvailableDays, $days);
+        }
+
+        return $notAvailableDays;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

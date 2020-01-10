@@ -10,6 +10,15 @@
 <div class="container">
     <h1>Your Booking n°{{ booking.id}}</h1>
 
+    {% if app.request.query.get('withAlert') %}
+        <div class="alert alert-success">
+            <h4 class="alert-heading">Well done ! </h4>
+            <p>Your booking n° {{ booking.id }} has been registered !</p>
+            <p>You'll be going to <strong><a href="{{ path('ads_show',{'slug' : ad.slug }) }}">{{ ad.title }}</a></strong></p>
+            <p>You can contact <strong><a href="{{ path('user_show', {'slug' : author.slug}) }}">{{ author.fullName }}</a></strong> for more details.</p>
+        </div>
+    {% endif %}
+
     <div class="row">
         <div class="col">
             <div class="alert alert-light">

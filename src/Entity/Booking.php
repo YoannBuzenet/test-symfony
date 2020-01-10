@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
@@ -32,12 +33,14 @@ class Booking
     private $ad;
 
     /**
-     * @ORM\Column(type="datetime")
+     *@ORM\Column(type="datetime")
+     *@
      */
     private $startDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     *@ORM\Column(type="datetime")
+     *
      */
     private $endDate;
 
@@ -65,13 +68,57 @@ class Booking
      */
     public function prePersist(){
         if(empty($this->createdAt)){
-            $this->createdAt = new DateTime();
+            $this->createdAt = new \DateTime();
         }
 
         if(empty($this->amount)){
             //Daily price * number of days
             $this->amount = $this->getDuration() * $this->ad->getPrice();
         }
+    }
+
+    public function isBookableDates(){
+        //1.We have to know the impossible date for this booking
+            $notAvailableDays = $this->ad->getNotAvailableDays();
+
+        //2. Compare chosen date with impossible date
+            $bookingDays = $this->getDays();
+
+        //3. To make comparison easier, we transform both array of Datetime object into Strings
+
+            //Local function
+            $formatDay = function($day){
+                return $day->format('Y-m-d');
+            };
+
+            $days = array_map($formatDay, $bookingDays);
+
+            $notAvailabledays = array_map($formatDay, $notAvailableDays);
+
+            foreach($days as $day){
+                if(array_search($day, $notAvailabledays) !== false){
+                    return false;
+                }
+            }
+            return true;
+    }
+    /**
+     * Get Array with days of the booking
+     *
+     * @return array Datetime object corresponding to each day of the booking
+     */
+    public function getDays(){
+        $result = range(
+            $this->startDate->getTimestamp(),
+            $this->endDate->getTimestamp(),
+            24*60*60*1000
+        );
+
+        $days = array_map(function($dayTimestamp){
+            return new \Datetime(date('Y-m-d', $dayTimestamp));
+        }, $result);
+
+        return $days;
     }
 
     public function getDuration(){
