@@ -35,7 +35,7 @@ class BookingController extends AbstractController
             if(!$booking->isBookableDates()){
                 $this->addFlash(
                     'warning',
-                    'Les dates sélectionnées ne sont pas disponibles. Merci d\'en choisir d\'autres'
+                    'Les dates sélectionnées ne sont pas disponibles. Merci d\'en choisir d\'autres.'
                 );
             }
             else {

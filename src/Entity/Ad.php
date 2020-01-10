@@ -114,7 +114,7 @@ class Ad
             //Compute busy days
             $result = range($booking->getStartDate()->getTimestamp(),
                             $booking->getEndDate()->getTimestamp(),
-                            24*60*60*1000);
+                            24*60*60);
 
             $days = array_map(function($dayTimestamp){
                 return new \Datetime(date('Y-m-d', $dayTimestamp));
