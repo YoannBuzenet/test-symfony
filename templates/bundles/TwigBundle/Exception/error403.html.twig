@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Access Not Granted{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>You don't have access to this page.</h1>
+        <p>You can't access to this page. But no worries, here are other ressources :</p>
+       
+        <a href="{{ path('homepage') }}" class="btn btn-primary">Homepage</a>
+        <a href="{{ path('ads_index') }}" class="btn btn-success">Our ads</a>
+    </div>
+
+{% endblock %}
