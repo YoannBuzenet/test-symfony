@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
+ * @HasLifecycleCallbacks()
  */
 class Booking
 {
@@ -52,6 +55,29 @@ class Booking
      * @ORM\Column(type="text", nullable=true)
      */
     private $comment;
+
+    /**
+     * Call back called each time a booking is inserted into DB
+     * 
+     * @ORM\PrePersist
+     *
+     * @return void
+     */
+    public function prePersist(){
+        if(empty($this->createdAt)){
+            $this->createdAt = new DateTime();
+        }
+
+        if(empty($this->amount)){
+            //Daily price * number of days
+            $this->amount = $this->getDuration() * $this->ad->getPrice();
+        }
+    }
+
+    public function getDuration(){
+        $diff = $this->endDate->diff($this->startDate);
+        return $diff->days;
+    }
 
     public function getId(): ?int
     {
