@@ -34,13 +34,13 @@ class Booking
 
     /**
      *@ORM\Column(type="datetime")
-     *@
+     *@Assert\GreaterThan("today", message="La date d'arrivée dans l'appartement doit être ultérieure à la date d'aujourd'hui.")
      */
     private $startDate;
 
     /**
      *@ORM\Column(type="datetime")
-     *
+     *@Assert\GreaterThan(propertyPath="startDate", message="La date de départ de l'appartement doit être après la date d'arrivée dedans.")
      */
     private $endDate;
 
