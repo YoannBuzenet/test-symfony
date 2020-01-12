@@ -58,16 +58,28 @@
                     <a href="{{ path("user_show", {'slug' : author.slug})}}" class="btn btn-primary">See More</a>
             </div>
 
+            
             <div class="alert alert-light">
+            
                 <h2 class="alert-heading">How was your trip ?</h2>
-                {% if date() > date(booking.endDate) %}
-                    {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    <button type="submit" class="btn btn-success">Confirm</button>
-                    {{ form_end(form) }}
-                {% else %}
-                    <p>You will be able to comment this trip after it ends.</p>
-                {% endif %}
+                
+                    {% if date() > date(booking.endDate)%}
+                        {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                        {% if comment is not null %}
+                            <blockquote>
+                                {{ comment.content }}
+                            </blockquote>
+                            <strong>Rating : </strong> {% include 'partials/rating.html.twig' with {'rating' : comment.rating} %}
+                        {% else %} 
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <button type="submit" class="btn btn-success">Confirm</button>
+                            {{ form_end(form) }}   
+                        {% endif %}
+                    {% else %}
+                        <p>You will be able to comment this trip after it ends.</p>
+                    {% endif %}
+                   
             </div>
 
         </div>

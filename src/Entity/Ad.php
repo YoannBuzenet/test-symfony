@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -148,6 +149,19 @@ class Ad
         }
 
         return $notAvailableDays;
+    }
+
+    /**
+     * Get comments from user thanks to the Ad
+     *
+     * @param User $author
+     * @return Comment|null
+     */
+    public function getCommentFromAuthor(User $author){
+        foreach($this->comments as $comment){
+            if($comment->getAuthor() === $author) return $comment ;
+        }
+        return null;
     }
 
     public function getId(): ?int
