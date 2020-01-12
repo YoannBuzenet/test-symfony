@@ -35,7 +35,7 @@
                     <dt class="col-md-4">Total Amount</dt>
                     <dd class="col-md-8">{{ booking.amount }} &euro;</dd>
                     <dt class="col-md-4">Comment</dt>
-                    <dd class="col-md-8">{{ booking.comment }}</dd>
+                    <dd class="col-md-8">{{ booking.comment | default('No comments yet.')}}</dd>
                 </dl>
 
                 <hr>
@@ -57,6 +57,11 @@
 
                     <a href="{{ path("user_show", {'slug' : author.slug})}}" class="btn btn-primary">See More</a>
             </div>
+
+            <div class="alert alert-light">
+            
+            </div>
+
         </div>
         <div class="col">
             <div class="alert alert-light">

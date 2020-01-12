@@ -107,6 +107,24 @@ class Ad
             $this->slug = $slugify->slugify($this->title);
         }
     }
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function getAvgRating(){
+        //Calculate sum of all notations
+        $sum =  array_reduce($this->comments->toArray(), function($total, $comment){
+            return $total + $comment->getRating();
+        }, 0);
+
+        //divide to get average
+        if(count($this->comments) > 0 )
+            return $average = $sum / count($this->comments);
+        else{
+            return 0;
+        }
+    }
 
     /**
      * Gives array of NOT available days
