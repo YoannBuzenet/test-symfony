@@ -59,7 +59,15 @@
             </div>
 
             <div class="alert alert-light">
-            
+                <h2 class="alert-heading">How was your trip ?</h2>
+                {% if date() > date(booking.endDate) %}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                    {{ form_end(form) }}
+                {% else %}
+                    <p>You will be able to comment this trip after it ends.</p>
+                {% endif %}
             </div>
 
         </div>
