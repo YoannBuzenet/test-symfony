@@ -3,7 +3,7 @@
 <div class="col-md-4">
     <div class="card bg-light mb-3">
         <div class="card-header text-center">
-            <p>{{ad.rooms}} Chambres, <strong>{{ad.price}}&euro;</strong>/nuit</p> <br>
+            <p>{{ad.rooms}} Chambres, <strong>{{ad.price | number_format(2, ',', ' ')}}&euro;</strong>/nuit</p> <br>
             
             {% if ad.comments | length > 0 %}
                 {% include 'partials/rating.html.twig' with {'rating' : ad.avgRating}%}
@@ -19,7 +19,7 @@
                 <p class="card-text">
                 {{ad.introduction}}
                 </p>
-                <a href="{{ url }}" class="btn btn-primary">Visiter</a>
+                <a href="{{ url }}" class="btn btn-primary float-right">Visiter</a>
 
                 {% if app.user and app.user == ad.author %}
                     <a href="{{path('ads_edit', { 'slug' : ad.slug })}}" class="btn btn-secondary">Modifier l'annonce</a>
