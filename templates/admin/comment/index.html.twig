@@ -1,0 +1,37 @@
+{% extends '/admin/base_admin.html.twig' %}
+
+{% block title %}All Comments{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1 class="my-3">Comments</h1>
+
+    <table class="table">
+    <thead>
+        <th>Id</th>
+        <th>Date</th>
+        <th>Author</th>
+        <th>Comment</th>
+        <th>Rating</th>
+        <th>Ad</th>
+        <th></th>
+    </thead>
+    <tbody>
+    {% for comment in comments %}
+    <tr>
+        <td>{{ comment.id }}</td>
+        <td>{{ comment.createdAt | date('d-m-Y')}}</td>
+        <td><img src="{{comment.author.picture}}" alt="{{comment.author.fullName}}" class="avatar avatar-micro">{{ comment.author.fullName }}</td>
+        <td>{{ comment.content }}</td>
+        <td><span class="primary">{{ comment.rating }}</span></td>
+        <td>{{ comment.ad.title }}</td>
+        <td>
+            <a href="#"><button class="btn btn-primary"><i class="fas fa-pen"></i></button></a>
+            <a href="#"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>   
+    </table>
+</div>
+{% endblock %}
