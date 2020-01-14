@@ -52,4 +52,33 @@ class AdminAdController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * Deletes an ad
+     *
+     * @Route("/admin/ads/{id}/delete", name="admin_ads_delete")
+     * 
+     * @param Ad $a
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function delete(Ad $ad, EntityManagerInterface $manager){
+        if(count($ad->getBookings()) > 0){
+            $this->addFlash(
+                'warning',
+                "The ad <strong>{$ad->getTitle()}</strong> can not be deleted, as it has already somes bookings made on it."
+            );
+        }
+        else {
+            $manager->remove($ad);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "The ad <strong>{$ad->getTitle()}</strong> has been deleted."
+            );
+        }
+
+        return $this->redirectToRoute('admin_ads_index');
+    }
 }
