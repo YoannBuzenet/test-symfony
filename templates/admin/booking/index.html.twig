@@ -3,6 +3,10 @@
 {% block title %}Booking Administration{% endblock %}
 
 {% block body %}
+
+{% set pages = pagination.pages %}
+{% set page = pagination.page %}
+
 <div class="container-fluid">
 
     <h1 class="my-3">Booking Administration</h1>
@@ -18,7 +22,7 @@
             <th></th>
         </thead>
         <tbody>
-        {% for booking in bookings %}
+        {% for booking in pagination.data %}
             <tr>
                 <td>{{ booking.id }}</td>
                 <td>{{ booking.startDate | date('d-m-Y') }}</td>
@@ -34,6 +38,25 @@
         {% endfor %}    
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+            <ul class="pagination">
+                <li class="page-item {% if page == 1 %} disabled {% endif %}">
+                <a class="page-link" href="{{path('admin_ads_index', {'page' : page - 1 })}}">&laquo;</a>
+                </li>
+
+                
+
+                {% for i in 1..pages %}
+                    <li class="page-item {% if i == page %}active {% endif %}">
+                    <a class="page-link" href="{{path('admin_ads_index', {'page' : i})}}">{{i}}</a>
+                    </li>
+                {% endfor %}
+
+                <li class="page-item {% if page == pages %} disabled {% endif %}">
+                <a class="page-link" href="{{path('admin_ads_index', {'page' : page + 1})}}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
 
 </div>
 {% endblock %}

@@ -9,20 +9,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\PaginationService;
 
 class AdminAdController extends AbstractController
 {
     /**
      * @Route("/admin/ads/{page}", name="admin_ads_index", requirements={"page":"\d+"})
      */
-    public function index(AdRepository $repo, $page = 1)
+    public function index(AdRepository $repo, $page = 1, PaginationService $paginator)
     {
-        $limit = 10;
-
-        $start = $page * $limit - $limit;
+        $paginator->setEntityClass(Ad::class)
+                  ->setPage($page);
 
         return $this->render('admin/ad/index.html.twig', [
-            'ads' => $repo->findBy([], [], $limit, $start)
+            'pagination' => $paginator
         ]);
     }
 
