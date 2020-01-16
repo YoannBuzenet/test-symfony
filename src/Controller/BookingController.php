@@ -72,7 +72,7 @@ class BookingController extends AbstractController
 
         $comment = new Comment();
 
-        $form = $this->createform(CommentType::class, $comment,);
+        $form = $this->createform(CommentType::class, $comment);
 
         $form->handleRequest($request);
 

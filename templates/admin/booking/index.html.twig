@@ -13,6 +13,7 @@
             <th>From</th>
             <th>To</th>
             <th>Adventurer</th>
+            <th>Price</th>
             <th>Ad</th>
             <th></th>
         </thead>
@@ -23,10 +24,11 @@
                 <td>{{ booking.startDate | date('d-m-Y') }}</td>
                 <td>{{ booking.endDate | date('d-m-Y') }}</td>
                 <td><img src="{{ booking.booker.picture }}" alt="{{ booking.booker.fullName }} picture" class="avatar avatar-micro"> {{ booking.booker.fullName }}</td>
+                <td>{{ booking.amount }}&euro;</td>
                 <td>{{ booking.ad.title }}</td>
                 <td>
                     <a href="{{path('admin_booking_edit', {'id': booking.id})}}"><button class="btn btn-primary"><i class="fas fa-pen"></i></button></a>
-                    <a href="#"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>
+                    <a href="{{path('admin_booking_delete', {'id': booking.id})}}"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>
                 </td>
             </tr>
         {% endfor %}    
