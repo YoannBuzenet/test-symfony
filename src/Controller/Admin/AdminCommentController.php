@@ -64,6 +64,9 @@ class AdminCommentController extends AbstractController
      * 
      * @Route("admin/comment/{id}/delete", name="admin_comment_delete")
      *
+     * @param Comment $comment
+     * @param EntityManagerInterface $manager
+     * 
      * @return Response
      */
     public function delete(Comment $comment, EntityManagerInterface $manager){
