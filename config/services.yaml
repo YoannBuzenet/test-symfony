@@ -31,6 +31,12 @@ services:
     
     App\Form:
         autowire : true    
+        
     App\Service\PaginationService: 
         autowire : true
+        arguments: 
+            $templatePath: 'admin/_partials/pagination.html.twig'
+    # Symfony\Component\HttpFoundation\Request:
+    #     autowire : true    
   
+        
